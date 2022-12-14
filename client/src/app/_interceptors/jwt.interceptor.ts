@@ -17,7 +17,7 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.accoutService.currentUser$
       .pipe(
-        take(1) // this method called for auto-unsubscription
+        take(1)
       ).subscribe({
         next: (user: User | null) => {
           if (user) {

@@ -19,13 +19,15 @@ export class MemberListComponent implements OnInit {
   userParams: UserParams | undefined;
   user: User | undefined;
 
-  constructor(private membersService: MembersService, private accountService: AccountService) {
+  constructor(
+    private membersService: MembersService,
+    private accountService: AccountService
+  ) {
     this.accountService.currentUser$
       .pipe(
         take(1)
       ).subscribe((user) => {
         if (user) {
-          console.log('😊 MEMBER-LIST user: ', user);
           this.userParams = new UserParams(user);
           this.user = user;
         }

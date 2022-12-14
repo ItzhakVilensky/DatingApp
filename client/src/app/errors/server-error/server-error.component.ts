@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-server-error',
-  templateUrl: './server-error.component.html',
-  styleUrls: ['./server-error.component.css']
+  templateUrl: './server-error.component.html'
 })
-export class ServerErrorComponent implements OnInit {
+export class ServerErrorComponent {
 
   error: any;
 
@@ -14,8 +13,4 @@ export class ServerErrorComponent implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     this.error = navigation?.extras?.state?.['serverError'];
   }
-
-  ngOnInit(): void {
-  }
-
 }

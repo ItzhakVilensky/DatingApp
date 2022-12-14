@@ -24,6 +24,16 @@ export class MembersService {
     return this.getPaginatedResult<Member[]>(this.baseUrl + 'users', params)
   }
 
+  private getPaginationMembers(userParams: UserParams) {
+    let params = new HttpParams();
+    params = params.append('pageNumber', userParams.pageNumber);
+    params = params.append('pageSize', userParams.pageSize);
+    params = params.append('minAge', userParams.minAge);
+    params = params.append('maxAge', userParams.maxAge);
+    params = params.append('gender', userParams.gender);
+    return params;
+  }
+
   private getPaginatedResult<T>(url: string, params: HttpParams): Observable<PaginationResult<T>> {
     const paginatedResult: PaginationResult<T> = new PaginationResult<T>;
     return this.http.get<T>(url, { observe: 'response', params })
@@ -63,15 +73,5 @@ export class MembersService {
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
-  }
-
-  getPaginationMembers(userParams: UserParams) {
-    let params = new HttpParams();
-    params = params.append('pageNumber', userParams.pageNumber);
-    params = params.append('pageSize', userParams.pageSize);
-    params = params.append('minAge', userParams.minAge);
-    params = params.append('maxAge', userParams.maxAge);
-    params = params.append('gender', userParams.gender);
-    return params;
   }
 }
