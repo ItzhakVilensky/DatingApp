@@ -23,7 +23,7 @@ public class AccountController : BaseApiController
         _mapper = mapper;
     }
 
-    [HttpPost("register")] // api/account/register
+    [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
         if (await UserExists(registerDto.Username))
@@ -32,7 +32,6 @@ public class AccountController : BaseApiController
         var user = _mapper.Map<AppUser>(registerDto);
 
         using var hmac = new HMACSHA512(); // passwords' salt / key
-
 
         user.UserName = registerDto.Username.ToLower();
         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
@@ -51,7 +50,7 @@ public class AccountController : BaseApiController
         };
     }
 
-    [HttpPost("login")] // api/account/login
+    [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await _context.Users
@@ -70,7 +69,7 @@ public class AccountController : BaseApiController
                 return Unauthorized("Invalid password");
         }
 
-        var res =  new UserDto
+        return new UserDto
         {
             Username = user.UserName,
             Token = _tokenService.CreateToken(user),
@@ -78,8 +77,6 @@ public class AccountController : BaseApiController
             KnownAs = user.KnownAs,
             Gender = user.Gender
         };
-
-        return res;
     }
 
     private async Task<bool> UserExists(string username)
