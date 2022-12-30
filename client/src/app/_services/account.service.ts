@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../_models/user';
+import { IUser } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +10,16 @@ import { User } from '../_models/user';
 export class AccountService {
 
   baseUrl = environment.apiUrl;
-  private currentUserSource = new BehaviorSubject<User | null>(null);
+  private currentUserSource = new BehaviorSubject<IUser | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) {
   }
 
   login(model: any): Observable<void> {
-    return this.http.post<User>(this.baseUrl + 'account/login', model)
+    return this.http.post<IUser>(this.baseUrl + 'account/login', model)
       .pipe(
-        map((user: User) => {
+        map((user: IUser) => {
           if (user) {
             this.setCurrentUser(user);
           }
@@ -27,10 +27,10 @@ export class AccountService {
       );
   }
 
-  register(model: any): Observable<User> {
-    return this.http.post<User>(this.baseUrl + 'account/register', model)
+  register(model: any): Observable<IUser> {
+    return this.http.post<IUser>(this.baseUrl + 'account/register', model)
       .pipe(
-        map((user: User) => {
+        map((user: IUser) => {
           if (user) {
             this.setCurrentUser(user);
           }
@@ -38,7 +38,7 @@ export class AccountService {
         }));
   }
 
-  setCurrentUser(user: User) {
+  setCurrentUser(user: IUser) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }

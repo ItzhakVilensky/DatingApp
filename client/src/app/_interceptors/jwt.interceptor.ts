@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 import { AccountService } from '../_services/account.service';
-import { User } from '../_models/user';
+import { IUser } from '../_models/user';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
       .pipe(
         take(1)
       ).subscribe({
-        next: (user: User | null) => {
+        next: (user: IUser | null) => {
           if (user) {
             request = request.clone({
               setHeaders: {
