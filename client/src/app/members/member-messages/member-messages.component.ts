@@ -1,29 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IMessage } from 'src/app/_models/message';
-import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
   selector: 'app-member-messages',
   templateUrl: './member-messages.component.html',
   styleUrls: ['./member-messages.component.css']
 })
-export class MemberMessagesComponent implements OnInit {
+export class MemberMessagesComponent {
 
   @Input() username?: string;
-  messages: IMessage[] = [];
-
-  constructor(private messageService: MessageService) { }
-
-  ngOnInit(): void {
-    this.loadMessages();  
-  }
-
-  loadMessages() {
-    if (this.username) {
-      this.messageService.getMessageThread(this.username).subscribe({
-        next: messages => this.messages = messages
-      });
-    }
-  }
-
+  @Input() messages?: IMessage[] | undefined = [];
 }
