@@ -29,10 +29,13 @@
             </tr>
         </thead>
         <tbody class="align-middle">
-            <tr *ngFor="let message of messages" routerLink="{{container === 'Outbox' ? 
-            '/members/' + message.recipientUsername :
-             '/members/' + message.senderUsername}}">
-                <td>{{message.content}}</td>
+            <tr *ngFor="let message of messages"
+                routerLink="{{container === 'Outbox' ? 
+                '/members/' + message.recipientUsername :
+                '/members/' + message.senderUsername}}"
+                [queryParams]="{tab: 'Messages'}">
+                
+             <td>{{message.content}}</td>
                 <td>
                     <div *ngIf="container === 'Outbox'">
                         <img class="img-circle rounded-circle me-2"
